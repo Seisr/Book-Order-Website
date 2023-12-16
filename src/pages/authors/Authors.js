@@ -11,7 +11,7 @@ const Authors = () => {
   const retrieveAuthors = () => {
     BookDataService.getAllAuthors()
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setAuthors(res.data);
       })
       .catch((e) => {

@@ -18,6 +18,7 @@ import ProductsCarousel from "./components/ProductsCarousel/ProductsCarousel";
 import CarouselBook from "./components/CarouselBook/CarouselBook";
 import Authors from "./pages/authors/Authors";
 import Cart from "./pages/cart/Cart";
+import PromotionContent from "./components/Promotion/promotion-content"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/promotions" element={<Promotions />} />
+        <Route exact path="/promotions/:id" element={<PromotionContent/>} />
         <Route path="/news" element={<News />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
