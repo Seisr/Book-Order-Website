@@ -1,17 +1,13 @@
-.cart {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & img {
-    height: 15%;
-    width: 15%;
-  }
+html,
+.body {
+  background-color: #f0f0f2;
 }
 
-.inp {
-  margin: 0 0 1em 0;
-}
-
-h5 {
-  color: #3a4059;
+.header .headerTitle h1 {
+  color: #474d66;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "TiemposHeadline", serif;
+  background-color: white;
+  padding: 33px
 }

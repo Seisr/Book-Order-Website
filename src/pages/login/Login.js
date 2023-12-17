@@ -1,25 +1,22 @@
 import { React, useState } from "react";
 import "./Login.css";
-import { useCollapse } from "react-collapsed";
+import BookDataService from "../../services/BookDataService";
 
-const Collapsible = (props) => {
-  const [open, setOPen] = useState(false);
-  const toggle = () => {
-    setOPen(!open);
-  };
-  return (
-    <div>
-      <button className="collapse-header" onClick={toggle}>
-        {props.label}
-      </button>
-      {open && <div className="collapse-body">{props.children}</div>}
-    </div>
-  );
+const loginFunction = async (data) => {
+  const res = await BookDataService.logIn({
+    username,
+    password,
+  });
+  sessionStorage.setItem("accessToken", res.data.result.accessToken);
 };
 
 const Login = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const collapseLogin = () => {
     setOpenLogin(!openLogin);
     setOpenSignup(false);
@@ -39,32 +36,41 @@ const Login = () => {
           {openLogin && (
             <div className="collapse-body">
               <div class="detailArea">
-                <form>
-                  <div class="form-login">
-                    <label for="inputUsername">Username</label>
-                    <input
-                      id="username"
-                      name="username"
-                      placeholder="Enter Username"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-login">
-                    <label for="inputPassword">Password</label>
-                    <input
-                      id="password"
-                      name="password"
-                      placeholder="Enter Password"
-                      type="password"
-                    />
-                  </div>
+                {/* <form> */}
+                <div class="form-login">
+                  <label for="inputUsername">Username</label>
+                  <input
+                    id="username"
+                    name="username"
+                    placeholder="Enter Username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.currentTarget.value);
+                    }}
+                  />
+                </div>
+                <div className="form-login">
+                  <label for="inputPassword">Password</label>
+                  <input
+                    id="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.currentTarget.value);
+                    }}
+                  />
+                </div>
+                <div>
                   <div>
-                    <div>
-                      <button class="submit">Continue</button>
-                    </div>
+                    <button className="submit" onClick={() => loginFunction()}>
+                      Continue
+                    </button>
                   </div>
-                </form>
+                </div>
+                {/* </form> */}
               </div>
             </div>
           )}

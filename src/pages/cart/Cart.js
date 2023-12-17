@@ -1,150 +1,77 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import BookDataService from "../../services/BookDataService";
 import { Button, Input } from "antd";
 import "./Cart.css";
+import { Spinner } from "reactstrap";
+import { url } from "../../settings";
 
-const Cart = () => {
-  const [carts, setCarts] = useState([]);
-  // const [totalAmount, setTotalAmount] = useState(0);
-  let [tA, setTa] = useState(0);
-  let totalAmount = useRef(0);
-
+const Products = () => {
+  const [carts, setCarts] = useState();
   useEffect(() => {
-    retrieveCart();
-    // setTa((tA += Number(totalAmount.current.innerText)));
+    BookDataService.getCart().then((res) => setCarts(res.data));
   }, []);
-  // let total = 0;
-  const retrieveCart = () => {
-    BookDataService.getCart()
-      .then((res) => {
-        console.log(res.data);
-        setCarts(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
-  const calSum = () => {
-    // setTa((tA += Number(totalAmount.current.innerText)));
-    console.log(totalAmount);
-  };
-  // setTa(tA + Number(totalAmount.current.innerText));
+  console.log(carts);
 
-  // for (var i = 0; i < carts.length; i++) {
-  //   total += carts[i].product.price;
-  // }
-  // console.log(total);
-
-  // var prices = carts.map((p) => {
-  //   p.product.price;
-  // });
-  // console.log(prices)
-
-  // let x = carts.reduce((total, cart) => {
-  //   return total + cart.product.price;
-  // }, 0);
-  // console.log(x);
-
-  {
-    carts.length == 0 && <div>No items are added</div>;
+  if (!carts) {
+    return <Spinner />;
   }
+
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h1>Cart</h1>
-          </div>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-12">
-          <table className="table table-hover">
-            <thead style={{ width: "100%" }}>
-              <tr>
-                <th span="1" style={{ width: "20%" }} scope="col">
-                  Name
-                </th>
-                <th span="1" style={{ width: "10%" }} scope="col">
-                  Price
-                </th>
-                <th span="1" style={{ width: "20%" }} scope="col">
-                  Cover
-                </th>
-                <th span="1" style={{ width: "20%" }} scope="col">
-                  Remove
-                </th>
-                {/* <th span="1" style={{ width: "20%" }} scope="col">
-                Remove
-              </th> */}
-              </tr>
-            </thead>
-            {/* start map */}
-            {carts.map((cart, i) => {
-              return (
-                <>
-                  <tbody>
-                    {cart.product && (
-                      <tr key={cart.product.id}>
-                        <td>{cart.product.name}</td>
-                        <td ref={totalAmount}>{cart.product.price}</td>
-                        <td>
-                          <img className="wlimg" src={cart.product.imageUrl} />
-                        </td>
-                        <td>
-                          <button className="btn btn-danger">Remove</button>
-                        </td>
-                        {/* <td>
-                        <button className="btn btn-danger">Remove</button>
-                      </td> */}
-                      </tr>
-                    )}
-                  </tbody>
-                </>
-              );
-            })}
-            {/* end map */}
-          </table>
-        </div>
-      </div>
-      {/* <div className="row">
-        <button className="btn btn-primary" onClick={calSum}>
-          Cal Sum
-        </button>
-        <div className="col-12">
-          <h2>Total: {tA}</h2>
-        </div>
-      </div> */}
+      {carts &&
+        carts.map((cart) => {
+          return (
+            <div class="row">
+              <div class="col-md-12">
+                <div class="basketDescription">
+                  <div class="row">
+                    <div class="col-3">
+                      <img src={cart.product?.imageUrl} />
+                    </div>
+                    <div class="col-9">
+                      <div class="productDescription">
+                        <p>
+                          <a href={`/products/${cart.product?._id}`}>
+                            {cart.product?.name}
+                          </a>
+                        </p>
+                        <div class="row">
+                          <div class="col-12 col-sm-10">
+                            <div class="d-flex justify-content-between">
+                              <p class="bookType col-5 px-0">
+                                {cart.product && `Ebook`}
+                              </p>
+                              <p class="bookType other">
+                                <br />{" "}
+                                {cart.product && `${cart.product?.price}`}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
     </>
-    // <div className="cart">
-    //   <div className="content">
-    //     {carts.map((cart, i) => {
-    //       return (
-    //         <ul key={i}>
-    //           {cart.product && (
-    //             <li>
-    //               <img src={cart.product.imageUrl} />
-    //               {cart.product.name} x {cart.product.price}$
-    //               <button className="btn btn-danger"> Remove</button>
-    //             </li>
-    //           )}
-    //         </ul>
-    //       );
-    //     })}
-    //   </div>
-    //   <div className="btn1">
-    //     <h5>Promotion Code</h5>
+  );
+};
 
-    //     <Input className="inp"></Input>
-
-    //     <Button type="primary" size="large">
-    //       Proceed To Order
-    //     </Button>
-    //   </div>
-    //   {/* <p>Total amount: {totalAmount}</p> */}
-    // </div>
+const Cart = () => {
+  return (
+    <div className="body">
+      <div className="header">
+        <div className="headerTitle">
+          <h1>Basket</h1>
+        </div>
+      </div>
+      <div className="basketBody"></div>
+      <Products />
+    </div>
   );
 };
 

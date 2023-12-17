@@ -1,68 +1,55 @@
 import axios from "axios";
+import { url, get_header } from "../settings";
 
 export const BookDataService = {
   getAllAuthors: () => {
-    return axios.get(`http://35.187.239.47:8080/authors/`, {
-      headers: { "Session-ID": "123456789abcdef" },
+    return axios.get(`${url}/authors/`, {
+      headers: get_header(),
     });
   },
   getAuthorsById: (id) => {
-    return axios.get(`http://35.187.239.47:8080/authors/${id}`, {
-      headers: { "Session-ID": "123456789abcdef" },
+    return axios.get(`${url}/authors/${id}`, {
+      headers: get_header(),
     });
   },
   getAllProducts: () => {
-    // return axios.get(`http://35.187.239.47:8080/products`, {
-    //   headers: { "Session-ID": "123456789abcdef" },
-    // });
-    const tokenStr =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxZTM0NmU3MDQ0NDA2OGZjM2YwOWYiLCJpYXQiOjE3MDI3NDE2OTgsImV4cCI6MTcwMjgyODA5OH0.Qyoh5KUAYVrH_gzH9cvpbFo3UFoLMb6ASRVeq24ogUg";
-    return axios.get(`http://35.187.239.47:8080/products`, {
-      headers: { Authorization: `Bearer ${tokenStr}` },
+    return axios.get(`${url}/products`, {
+      headers: get_header(),
     });
   },
   getProductsById: (id) => {
-    // return axios.get(`http://35.187.239.47:8080/products/${id}`, {
-    //   headers: { "Session-ID": "123456789abcdef" },
-    // });
-    const tokenStr =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxZTM0NmU3MDQ0NDA2OGZjM2YwOWYiLCJpYXQiOjE3MDI3NDE2OTgsImV4cCI6MTcwMjgyODA5OH0.Qyoh5KUAYVrH_gzH9cvpbFo3UFoLMb6ASRVeq24ogUg";
-    return axios.get(`http://35.187.239.47:8080/products/${id}`, {
-      headers: { Authorization: `Bearer ${tokenStr}` },
+    return axios.get(`${url}/products/${id}`, {
+      headers: get_header(),
     });
   },
   getWishList: () => {
-    const tokenStr =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxZTM0NmU3MDQ0NDA2OGZjM2YwOWYiLCJpYXQiOjE3MDI3NDE2OTgsImV4cCI6MTcwMjgyODA5OH0.Qyoh5KUAYVrH_gzH9cvpbFo3UFoLMb6ASRVeq24ogUg";
-    return axios.get(`http://35.187.239.47:8080/wishlist`, {
-      headers: { Authorization: `Bearer ${tokenStr}` },
+    return axios.get(`${url}/wishlist`, {
+      headers: get_header(),
     });
   },
-  getCart: () => {
-    const tokenStr =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxZTM0NmU3MDQ0NDA2OGZjM2YwOWYiLCJpYXQiOjE3MDI3NDE2OTgsImV4cCI6MTcwMjgyODA5OH0.Qyoh5KUAYVrH_gzH9cvpbFo3UFoLMb6ASRVeq24ogUg";
-    return axios.get(`http://35.187.239.47:8080/carts`, {
-      headers: { Authorization: `Bearer ${tokenStr}` },
+  getCart: async () => {
+    return await axios.get(`${url}/carts`, {
+      headers: get_header(),
     });
   },
   getOrders: () => {
-    return axios.get(`http://35.187.239.47:8080/orders`, {
-      headers: { "Session-ID": "123456789abcdef" },
+    return axios.get(`${url}/orders`, {
+      headers: get_header(),
     });
   },
   postCarts: (data) => {
-    const tokenStr =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxZTM0NmU3MDQ0NDA2OGZjM2YwOWYiLCJpYXQiOjE3MDI3NDE2OTgsImV4cCI6MTcwMjgyODA5OH0.Qyoh5KUAYVrH_gzH9cvpbFo3UFoLMb6ASRVeq24ogUg";
-    return axios.post(`http://35.187.239.47:8080/carts`, data, {
-      headers: { Authorization: `Bearer ${tokenStr}` },
+    return axios.post(`${url}/carts`, data, {
+      headers: get_header(),
     });
   },
   postWishList: (data) => {
-    const tokenStr =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxZTM0NmU3MDQ0NDA2OGZjM2YwOWYiLCJpYXQiOjE3MDI3NDE2OTgsImV4cCI6MTcwMjgyODA5OH0.Qyoh5KUAYVrH_gzH9cvpbFo3UFoLMb6ASRVeq24ogUg";
-    return axios.post(`http://35.187.239.47:8080/wishlist`, data, {
-      headers: { Authorization: `Bearer ${tokenStr}` },
+    return axios.post(`${url}/wishlist`, data, {
+      headers: get_header(),
     });
+  },
+
+  logIn: async (data) => {
+    return await axios.post(`${url}/auth/login`, data);
   },
 };
 
