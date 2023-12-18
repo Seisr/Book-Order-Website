@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Carousel from "react-bootstrap/Carousel";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartShopping,
+  faHeart,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
+
 const Header = () => {
+  // useEffect(() => {
+
+  // }, [])
   return (
     <div>
       <Navbar bg="dark" data-bs-theme="dark">
@@ -29,9 +34,7 @@ const Header = () => {
               <Nav.Link as={Link} to="/authors">
                 Authors
               </Nav.Link>
-              {/* <Nav.Link as={Link} to="/news">
-                News
-              </Nav.Link> */}
+
               <Nav.Link as={Link} to="/promotions">
                 Promotions
               </Nav.Link>
@@ -43,18 +46,6 @@ const Header = () => {
               </Nav.Link>
             </Nav>
             <Nav>
-              {" "}
-              {/* <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form> */}
-            </Nav>
-            <Nav>
               <Nav.Link as={Link} to="/wishlist">
                 <FontAwesomeIcon icon={faHeart} />
               </Nav.Link>
@@ -64,6 +55,9 @@ const Header = () => {
                   icon={faCartShopping}
                   className="cartShopping p-1"
                 />
+              </Nav.Link>
+              <Nav.Link as={Link} to="/orders">
+                <FontAwesomeIcon icon={faList} />
               </Nav.Link>
               <Nav.Link as={Link} to="/login">
                 Login

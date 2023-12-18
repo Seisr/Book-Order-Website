@@ -2,49 +2,58 @@ import axios from "axios";
 import { url, get_header } from "../settings";
 
 export const BookDataService = {
-  getAllAuthors: () => {
+  getAllAuthors: async () => {
     return axios.get(`${url}/authors/`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  getAuthorsById: (id) => {
+  getAuthorsById: async (id) => {
     return axios.get(`${url}/authors/${id}`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  getAllProducts: () => {
+  getAllProducts: async () => {
     return axios.get(`${url}/products`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  getProductsById: (id) => {
+  getProductsById: async (id) => {
     return axios.get(`${url}/products/${id}`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  getWishList: () => {
+  getWishList: async () => {
     return axios.get(`${url}/wishlist`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
   getCart: async () => {
     return await axios.get(`${url}/carts`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  getOrders: () => {
+  getOrders: async () => {
     return axios.get(`${url}/orders`, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  postCarts: (data) => {
+  postCarts: async (data) => {
     return axios.post(`${url}/carts`, data, {
-      headers: get_header(),
+      headers: await get_header(),
     });
   },
-  postWishList: (data) => {
+  postWishList: async (data) => {
     return axios.post(`${url}/wishlist`, data, {
-      headers: get_header(),
+      headers: await get_header(),
+    });
+  },
+
+  logIn: async (data) => {
+    return await axios.post(`${url}/auth/login`, data);
+  },
+  signUp: async (data) => {
+    return await axios.post(`${url}/users`, data, {
+      headers: await get_header(),
     });
   },
 

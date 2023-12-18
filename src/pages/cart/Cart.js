@@ -2,76 +2,90 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import BookDataService from "../../services/BookDataService";
 import { Button, Input } from "antd";
 import "./Cart.css";
-import { Spinner } from "reactstrap";
-import { url } from "../../settings";
+import ListItem from "../../components/ListItem/ListItem";
 
-const Products = () => {
-  const [carts, setCarts] = useState();
+const Cart = () => {
+  const [carts, setCarts] = useState([]);
+
   useEffect(() => {
-    BookDataService.getCart().then((res) => setCarts(res.data));
-  }, []);
+    retrieveCart();
+  }, [carts]);
 
-  console.log(carts);
+  const retrieveCart = () => {
+    BookDataService.getCart()
+      .then((res) => {
+        setCarts(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-  if (!carts) {
-    return <Spinner />;
+  const listItem1 = carts.map((cart, i) => {
+    return (
+      <>
+        {cart.product && <ListItem id2={cart.product._id} cartId={cart._id} />}
+      </>
+    );
+  });
+
+  const totalS = carts.reduce((tong, item) => {
+    return tong + item.product.price;
+  }, 0);
+
+  {
+    carts.length == 0 && <div>No items are added</div>;
   }
 
   return (
     <>
-      {carts &&
-        carts.map((cart) => {
-          return (
-            <div class="row">
-              <div class="col-md-12">
-                <div class="basketDescription">
-                  <div class="row">
-                    <div class="col-3">
-                      <img src={cart.product?.imageUrl} />
-                    </div>
-                    <div class="col-9">
-                      <div class="productDescription">
-                        <p>
-                          <a href={`/products/${cart.product?._id}`}>
-                            {cart.product?.name}
-                          </a>
-                        </p>
-                        <div class="row">
-                          <div class="col-12 col-sm-10">
-                            <div class="d-flex justify-content-between">
-                              <p class="bookType col-5 px-0">
-                                {cart.product && `Ebook`}
-                              </p>
-                              <p class="bookType other">
-                                <br />{" "}
-                                {cart.product && `${cart.product?.price}`}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-    </>
-  );
-};
-
-const Cart = () => {
-  return (
-    <div className="body">
-      <div className="header">
-        <div className="headerTitle">
-          <h1>Basket</h1>
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h1>Cart</h1>
+          </div>
         </div>
       </div>
-      <div className="basketBody"></div>
-      <Products />
-    </div>
+
+      <div className="row">
+        <div className="col-12">
+          <table className="table table-hover">
+            <thead style={{ width: "100%" }}>
+              <tr>
+                <th span="1" style={{ width: "20%" }} scope="col">
+                  Name
+                </th>
+                <th span="1" style={{ width: "10%" }} scope="col">
+                  Category
+                </th>
+                <th span="1" style={{ width: "30%" }} scope="col">
+                  Cover
+                </th>
+                <th span="1" style={{ width: "10%" }} scope="col">
+                  Price
+                </th>
+                <th span="1" style={{ width: "10%" }} scope="col">
+                  Remove
+                </th>
+              </tr>
+            </thead>
+            {listItem1}
+          </table>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12">
+          <h2>Total: {totalS}</h2>
+        </div>
+        <div className="btn1">
+          <h5>Promotion Code</h5>
+          <Input className="inp"></Input>
+          <Button type="primary" size="large">
+            Proceed To Order
+          </Button>
+        </div>
+      </div>
+    </>
   );
 };
 
