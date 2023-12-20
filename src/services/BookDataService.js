@@ -42,6 +42,11 @@ export const BookDataService = {
       headers: await get_header(),
     });
   },
+  delCart: async (id) => {
+    return axios.delete(`${url}/carts/${id}`, {
+      headers: await get_header(),
+    });
+  },
   postWishList: async (data) => {
     return axios.post(`${url}/wishlist`, data, {
       headers: await get_header(),
@@ -56,9 +61,26 @@ export const BookDataService = {
       headers: await get_header(),
     });
   },
+  postOrders: async (data) => {
+    return await axios.post(`${url}/orders`, data, {
+      headers: await get_header(),
+    });
+  },
 
-  logIn: async (data) => {
-    return await axios.post(`${url}/auth/login`, data);
+  getUser: async () => {
+    return await axios.post(
+      `${url}/auth/verify`,
+      {},
+      {
+        headers: await get_header(),
+      }
+    );
+  },
+
+  updateUser: async (data) => {
+    return await axios.patch(`${url}/users/me`, data, {
+      headers: await get_header(),
+    });
   },
 };
 

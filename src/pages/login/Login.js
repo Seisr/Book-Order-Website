@@ -1,8 +1,9 @@
-import { React, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import "./Login.css";
 import BookDataService from "../../services/BookDataService";
 import { Form, Input, Checkbox, Button, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../../App";
 
 const Login = () => {
   const [openLogin, setOpenLogin] = useState(false);
@@ -16,7 +17,7 @@ const Login = () => {
     setOpen(false);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     console.log("Clicked ok button");
     setOpen(false);
   };
@@ -36,10 +37,9 @@ const Login = () => {
       sessionStorage.setItem("accessToken", res.data.result.accessToken);
       setModalText("Sign in success");
       setOpen(true);
-      // setConfirmLoading(true);
       setTimeout(() => {
         setOpen(false);
-        // setConfirmLoading(false);
+        window.location.reload();
         navigate("/");
       }, 2000);
     } catch (error) {
@@ -78,6 +78,7 @@ const Login = () => {
                   <Form.Item
                     label="Username"
                     name="username"
+                    className="login-form-item"
                     rules={[
                       {
                         required: true,
@@ -85,11 +86,12 @@ const Login = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input size="large" />
                   </Form.Item>
                   <Form.Item
                     label="Password"
                     name="password"
+                    className="login-form-item"
                     rules={[
                       {
                         required: true,
@@ -97,7 +99,7 @@ const Login = () => {
                       },
                     ]}
                   >
-                    <Input.Password />
+                    <Input.Password size="large" />
                   </Form.Item>
                   <Form.Item name="remember" valuePropName="checked">
                     <Checkbox>Remember me</Checkbox>
@@ -132,6 +134,7 @@ const Login = () => {
                   layout="vertical"
                 >
                   <Form.Item
+                    className="login-form-item"
                     label="Name"
                     name="displayName"
                     rules={[
@@ -141,9 +144,10 @@ const Login = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input size="large" />
                   </Form.Item>
                   <Form.Item
+                    className="login-form-item"
                     label="Email"
                     name="email"
                     rules={[
@@ -157,9 +161,10 @@ const Login = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input size="large" />
                   </Form.Item>
                   <Form.Item
+                    className="login-form-item"
                     label="Username"
                     name="username"
                     rules={[
@@ -173,9 +178,10 @@ const Login = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input size="large" />
                   </Form.Item>
                   <Form.Item
+                    className="login-form-item"
                     label="Password"
                     name="password"
                     rules={[
@@ -189,7 +195,7 @@ const Login = () => {
                       },
                     ]}
                   >
-                    <Input.Password />
+                    <Input.Password size="large" />
                   </Form.Item>
                   <Form.Item wrapperCol={{ offset: 0 }}>
                     <Button
@@ -212,8 +218,8 @@ const Login = () => {
         title="Notification"
         open={open}
         onOk={handleOk}
-        // confirmLoading={confirmLoading}
         onCancel={handleCancel}
+        cancelButtonProps={{ style: { display: "none" } }}
       >
         {modalText}
       </Modal>
