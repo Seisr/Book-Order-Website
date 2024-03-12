@@ -9,10 +9,7 @@ var generatePassword = (
     .join("");
 
 // export const url = "https://fingertips.com.pk/api/paige";
-// export const url = "https://babook17-6it6ur392-seisr.vercel.app";
-// export const url = "https://babook17-1gghhr8jq-seisr.vercel.app";
-// export const url = "https://babook17-o8hlknxrx-seisr.vercel.app";
-export const url = "https://babook17-dz6nm9kzt-seisr.vercel.app";
+export const url = "https://livestream.techzeus.co/bookstore";
 
 export const is_authorzied = async (token = null) => {
   if (!token) {
