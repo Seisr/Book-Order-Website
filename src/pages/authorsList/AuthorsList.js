@@ -30,15 +30,17 @@ const AuthorsList = () => {
       {loading && <Loading />}
       <section className="authors_container">
         <div className="authors_list">
-          {authors.map((author, i) => {
-            return (
-              <div key={i} className="authors">
-                <NavLink to={`${author._id}`}>
-                  <img src={`${author.imageUrl}`} alt="" />
-                  <h2>{author.name}</h2>
-                </NavLink>
-              </div>
-            );
+          {authors.flatMap((author, i) => {
+            if (i != 1) {
+              return (
+                <div key={i} className="authors">
+                  <NavLink to={`${author._id}`}>
+                    <img src={`${author.imageUrl}`} alt="" />
+                    <h2>{author.name}</h2>
+                  </NavLink>
+                </div>
+              );
+            }
           })}
         </div>
       </section>
