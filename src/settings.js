@@ -9,9 +9,10 @@ var generatePassword = (
     .join("");
 
 // export const url = "https://fingertips.com.pk/api/paige";
-export const url = "https://livestream.techzeus.co/bookstore";
 // export const url = "https://bookstoreserverapi.vercel.app";
 // export const url = "https://babookserverapi.vercel.app/";
+// export const url = "https://livestream.techzeus.co/bookstore";
+export const url = "https://bookstoreapibackend.vercel.app/";
 
 export const is_authorzied = async (token = null) => {
   if (!token) {
